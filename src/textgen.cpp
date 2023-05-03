@@ -24,7 +24,7 @@ void TextGenerator::LoadData(std::string fileName) {
     //std::cout << "Current root: " << folderPath << std::endl;
     std::string rootName = "mod-lab06-markov";
     int pos = folderPath.find(rootName);
-    folderPath = folderPath.substr(0, pos + rootName.size()) + "/references/";
+    folderPath = folderPath.substr(0, pos + rootName.length()) + "/references/";
     std::string filePath = folderPath + fileName;
 
     std::ifstream f(filePath);
@@ -44,7 +44,6 @@ void TextGenerator::LoadData(std::string fileName) {
         char firstChar = word[0];
         char lastChar = word[word.length() - 1];
         char preLastChar = word[word.length() - 2];
-        //std::cout << word << " " << word.length() << " - " << lastChar << " " << (wchar_t) lastChar << std::endl;
 
         if (word.length() <= 0) { continue; }
         if (word.length() <= 1 && ispunct(lastChar)) { continue; }
@@ -60,7 +59,8 @@ void TextGenerator::LoadData(std::string fileName) {
             firstChar = word[0];
         }
 
-        while (ispunct(lastChar) || (wchar_t) lastChar == -69 && (wchar_t) preLastChar == -62) {
+        while (ispunct(lastChar) ||
+        (wchar_t) lastChar == -69 && (wchar_t) preLastChar == -62) {
             if (ispunct(lastChar)) {
                 word = word.substr(0, word.length() - 1);
             }
@@ -72,11 +72,10 @@ void TextGenerator::LoadData(std::string fileName) {
         }
 
         words.push_back(word);
-        //std::cout << word << " " << word.length() << " - " << lastChar << " " << (wchar_t) lastChar << std::endl;
     }
 
     if (words.size() <= prefixLength) {
-        throw std::invalid_argument("Provided text is shorter than prefix length!");
+        throw std::invalid_argument("Text is shorter than prefix length!");
     }
 
     for (int i = prefixLength; i < words.size(); i++) {
@@ -92,7 +91,8 @@ void TextGenerator::LoadData(std::string fileName) {
 
         if (statetab.find(pref) != statetab.end()) {
             suffixes currentSuff = statetab[pref];
-            if (std::find(currentSuff.begin(), currentSuff.end(), words[i]) == currentSuff.end()) {
+            if (std::find(currentSuff.begin(), currentSuff.end(),
+                          words[i]) == currentSuff.end()) {
                 statetab[pref].push_back(words[i]);
             }
         } else {
@@ -151,7 +151,8 @@ table TextGenerator::GetTable() {
 }
 
 void TextGenerator::PrintTable() {
-    for(table::iterator iter = statetab.begin(); iter != statetab.end(); iter++) {
+    for (table::iterator iter = statetab.begin();
+    iter != statetab.end(); iter++) {
         prefix p = iter->first;
         suffixes s = iter->second;
         std::cout << "PRF: ";
