@@ -96,8 +96,14 @@ void TextGenerator::LoadData(std::string referenceText) {
 
         if (statetab.find(pref) != statetab.end()) {
             suffixes currentSuff = statetab[pref];
-            if (std::find(currentSuff.begin(), currentSuff.end(),
-                          words[i]) == currentSuff.end()) {
+            bool hasWord = false;
+            for (int j = 0; j < currentSuff.size(); j++) {
+                if (currentSuff[j] == words[i]) {
+                    hasWord = true;
+                    break;
+                }
+            }
+            if (!hasWord) {
                 statetab[pref].push_back(words[i]);
             }
         } else {
@@ -109,10 +115,10 @@ void TextGenerator::LoadData(std::string referenceText) {
 }
 
 void TextGenerator::LoadData(table stateTable) {
-    statetab = std::move(stateTable);
     if (firstPrefix.empty()) {
-        firstPrefix = statetab.begin()->first;
+        firstPrefix = stateTable.begin()->first;
     }
+    statetab.insert(stateTable.begin(), stateTable.end());
 }
 
 std::string TextGenerator::Generate(int length, int randSeed) {
