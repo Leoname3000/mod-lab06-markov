@@ -14,7 +14,7 @@ TextGenerator::TextGenerator(int prefixLength) {
     this->prefixLength = prefixLength;
 }
 
-void TextGenerator::LoadData(std::string fileName) {
+void TextGenerator::LoadFile(std::string fileName) {
     setlocale(LC_ALL, "");
 
     std::string referenceText = "";
@@ -37,6 +37,11 @@ void TextGenerator::LoadData(std::string fileName) {
         std::cout << "Can't open file" << std::endl;
     }
 
+    LoadData(referenceText);
+}
+
+void TextGenerator::LoadData(std::string referenceText) {
+    setlocale(LC_ALL, "");
     std::stringstream strm(referenceText);
     std::vector<std::string> words;
     std::string word;
@@ -60,7 +65,7 @@ void TextGenerator::LoadData(std::string fileName) {
         }
 
         while (ispunct(lastChar) ||
-        (wchar_t) lastChar == -69 && (wchar_t) preLastChar == -62) {
+            (wchar_t) lastChar == -69 && (wchar_t) preLastChar == -62) {
             if (ispunct(lastChar)) {
                 word = word.substr(0, word.length() - 1);
             }
@@ -101,14 +106,6 @@ void TextGenerator::LoadData(std::string fileName) {
             statetab[pref] = suff;
         }
     }
-
-    //PrintTable();
-
-    //std::cout << "FirstPrefix: ";
-    //for (int i = 0; i < firstPrefix.size(); i++) {
-    //    std::cout << firstPrefix[i] << " ";
-    //}
-    //std::cout << std::endl;
 }
 
 void TextGenerator::LoadData(table stateTable) {

@@ -19,7 +19,8 @@ class TextGenerator {
     prefix firstPrefix;
  public:
     explicit TextGenerator(int prefixLength);
-    void LoadData(std::string fileName);
+    void LoadFile(std::string fileName);
+    void LoadData(std::string referenceText);
     void LoadData(table stateTable);
     std::string Generate(int length, int randSeed);
     table GetTable();

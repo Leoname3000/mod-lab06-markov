@@ -4,7 +4,7 @@
 
 TEST(TextGenerator, PrefixLength) {
     TextGenerator tg = TextGenerator(2);
-    tg.LoadData("test.txt");
+    tg.LoadData("With great power comes great responsibility.");
     table t = tg.GetTable();
     for (table::iterator iter = t.begin(); iter != t.end(); iter++) {
         prefix p = iter->first;
@@ -14,7 +14,7 @@ TEST(TextGenerator, PrefixLength) {
 
 TEST(TextGenerator, PrefixSuffix) {
     TextGenerator tg = TextGenerator(2);
-    tg.LoadData("test.txt");
+    tg.LoadData("With great power comes great responsibility.");
     table t = tg.GetTable();
     prefix p;
     p.push_back("With");
@@ -24,7 +24,7 @@ TEST(TextGenerator, PrefixSuffix) {
 
 TEST(TextGenerator, OneSuffix) {
     TextGenerator tg = TextGenerator(1);
-    tg.LoadData("test.txt");
+    tg.LoadData("With great power comes great responsibility.");
     table t = tg.GetTable();
     prefix p;
     p.push_back("With");
@@ -35,7 +35,7 @@ TEST(TextGenerator, OneSuffix) {
 
 TEST(TextGenerator, ManySuffixes) {
     TextGenerator tg = TextGenerator(1);
-    tg.LoadData("test.txt");
+    tg.LoadData("With great power comes great responsibility.");
     table t = tg.GetTable();
     prefix p;
     p.push_back("great");
